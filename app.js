@@ -95,7 +95,6 @@ function getOutputFilePath(file, outDir) {
     let splittedPath = file.split('/');
 
     splittedPath.shift();
-    splittedPath.shift();
     splittedPath = splittedPath.filter(subpath => !excludedFoldersInsideSurnames.some(folder => subpath.includes(folder)))
     splittedPath.unshift(outDir);
 
@@ -105,16 +104,15 @@ function getOutputFilePath(file, outDir) {
 }
 
 async function main() {
-    const rootDir = 'test';
-    const outDir = 'dist';
+    const rootDir = '.';
+    const outDir = '.';
 
-    const surnames = (await getSubfolders(rootDir));
-
+    const surnames = (await getSubfolders(rootDir))
     for (const surname of surnames) {
         const parsersFolders = await getParsersFoldersFromSurname(surname);
 
         for (const parserFolder of parsersFolders) {
-            const files = await getParserFolderContent(parserFolder)
+            const files = await getParserFolderContent(parserFolder);
 
             for (const file of files) {
                 const newFilePath = getOutputFilePath(file, outDir);
